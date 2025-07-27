@@ -38,30 +38,22 @@ const untils = [
 function App() {
   const [until] = useState(untils[3]);
   const [targetTime] = useState(until.time)
-  // const targetTime = new Date("2025-11-02T00:00:00")
-  // const [selected, setSelected]=useState('')
 
-  const [time,setTime] = useState({
-    hours:0,
-    minutes:0,
-    seconds:0,
-  })
+  const [time,setTime] = useState({hours:0, minutes:0, seconds:0})
 
   useEffect(()=>{
     const {hours,minutes,seconds} = getTimeLeft(targetTime);
-    setTime({
-      hours,
-      minutes,
-      seconds
-    })
+    setTime({hours, minutes, seconds})
   },[targetTime])
 
   useEffect(()=>{
-    const interval = setInterval(()=>{
+    const worker = new Worker('/ticker-worker.js');
+    worker.postMessage('start');
+    worker.onmessage=()=>{
       setTime(prev=>{
         let {hours,minutes,seconds}=prev;
         if(hours===0 && minutes===0 && seconds===0){
-          clearInterval(interval);
+          worker.postMessage('stop');
           return prev
         }
         if(seconds>0){
@@ -75,9 +67,12 @@ function App() {
         }
         return prev
       })
-    },1000)
-    return ()=>clearInterval(interval)
-  },[])
+    }
+    return ()=>{
+      worker.postMessage('stop');
+      worker.terminate();
+    }
+  },[]);
 
   useEffect(()=>{
     document.title = `${format(time.hours)} : ${format(time.minutes)} : ${format(time.seconds)}`

@@ -6,6 +6,11 @@ I created a useless app.
 ![alt text](thumbnail.png)
 
 ```sh
+nvm use 24.0.4 #or whatever
+npm run dev
+```
+
+```sh
 ssh -A sXXXXXXX@moss.labs.eait.uq.edu.au
 triton inst create --wait --name ZONE-NAME --network zones webproject z1-small
 ssh root@countdown.zones.eait.uq.edu.au
