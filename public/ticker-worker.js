@@ -1,11 +1,14 @@
-let interval = null;
+let timerId;
 
-self.onmessage = (e) => {
+self.onmessage = function(e) {
   if (e.data === 'start') {
-    interval = setInterval(() => {
-      self.postMessage('tick');
-    }, 1000);
+    if (!timerId) {
+      timerId = setInterval(() => {
+        self.postMessage({ type: 'tick', now: Date.now() });
+      }, 1000); // could be lower if you want smoother updates
+    }
   } else if (e.data === 'stop') {
-    clearInterval(interval);
+    clearInterval(timerId);
+    timerId = null;
   }
 };

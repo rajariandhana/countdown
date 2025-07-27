@@ -42,18 +42,29 @@ function App() {
 
   const [time,setTime] = useState({hours:0, minutes:0, seconds:0})
 
-  useEffect(()=>{
+  useEffect(() => {
     const worker = new Worker('/ticker-worker.js');
     worker.postMessage('start');
-    worker.onmessage=()=>{
-      const {hours,minutes,seconds} = getTimeLeft(targetTime);
-      setTime({hours, minutes, seconds})
-    }
-    return ()=>{
+
+    worker.onmessage = (event) => {
+      if (event.data.type === 'tick') {
+        const now = event.data.now;
+        const timeRemaining = Date.parse(targetTime) - now;
+
+        const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        setTime({ hours, minutes, seconds });
+      }
+    };
+
+    return () => {
       worker.postMessage('stop');
       worker.terminate();
-    }
-  },[]);
+    };
+  }, []);
+
 
   useEffect(()=>{
     document.title = `${format(time.hours)} : ${format(time.minutes)} : ${format(time.seconds)}`
@@ -61,19 +72,19 @@ function App() {
 
   const format = n => n.toString().padStart(2,'0');
 
-  function getTimeLeft(target){
-    const timeRemaining = Date.parse(target) - Date.now();
+  // function getTimeLeft(target){
+  //   const timeRemaining = Date.parse(target) - Date.now();
 
-    const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
-    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+  //   const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+  //   const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+  //   const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-    return {
-      hours,
-      minutes,
-      seconds,
-    };
-  }
+  //   return {
+  //     hours,
+  //     minutes,
+  //     seconds,
+  //   };
+  // }
 
   // const handleSelect=(e)=>{
   //   switch (e) {
