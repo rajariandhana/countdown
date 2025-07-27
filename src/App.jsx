@@ -36,7 +36,7 @@ const untils = [
 ]
 
 function App() {
-  const [until] = useState(untils[2]);
+  const [until] = useState(untils[3]);
   const [targetTime] = useState(until.time)
   // const targetTime = new Date("2025-11-02T00:00:00")
   // const [selected, setSelected]=useState('')
