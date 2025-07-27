@@ -26,6 +26,7 @@ const untils = [
     label:"Exam starts",
     timeText:"8 November 2025 - 8 AM",
     time:new Date("2025-11-08T08:00:00")
+    // time:new Date("2025-07-28T08:00:00")
   },
   {
     key:'exam-end',
@@ -42,31 +43,11 @@ function App() {
   const [time,setTime] = useState({hours:0, minutes:0, seconds:0})
 
   useEffect(()=>{
-    const {hours,minutes,seconds} = getTimeLeft(targetTime);
-    setTime({hours, minutes, seconds})
-  },[targetTime])
-
-  useEffect(()=>{
     const worker = new Worker('/ticker-worker.js');
     worker.postMessage('start');
     worker.onmessage=()=>{
-      setTime(prev=>{
-        let {hours,minutes,seconds}=prev;
-        if(hours===0 && minutes===0 && seconds===0){
-          worker.postMessage('stop');
-          return prev
-        }
-        if(seconds>0){
-          return {...prev, seconds:seconds-1}
-        }
-        if(minutes>0){
-          return {hours, minutes:minutes-1, seconds:59}
-        }
-        if(hours>0){
-          return {hours:hours-1, minutes:59, seconds:59}
-        }
-        return prev
-      })
+      const {hours,minutes,seconds} = getTimeLeft(targetTime);
+      setTime({hours, minutes, seconds})
     }
     return ()=>{
       worker.postMessage('stop');
@@ -110,7 +91,8 @@ function App() {
   return (
     <>
       <h1 className='text-md md:text-2xl text-red-500'>
-        When does {until.label}?
+        When does {until.label}? 
+        {/* {new Date(Date.now()).toString()} */}
       </h1>
       <div className='bg-black rounded-lg shadow-md px-4 md:px-12 py-4 md:py-6
         text-6xl md:text-8xl
