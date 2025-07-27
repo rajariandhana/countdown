@@ -114,32 +114,33 @@ function App() {
 
   return (
     <main className='flex flex-col items-center justify-center gap-y-2 font-mono'>
-      <h1 className='text-2xl text-red-500'>
+      <h1 className='text-xl md:text-2xl text-red-500'>
         When does {until.label}?
       </h1>
-      <div className='bg-black rounded-lg shadow-md px-12 py-6 text-8xl
+      <div className='bg-black rounded-lg shadow-md px-6 md:px-12 py-4 md:py-6
+        text-6xl md:text-8xl
         border-red-500 border-1
         text-red-500 text-right flex gap-x-2
         text-shadow-red-400 text-shadow-lg'
         style={{fontFamily:'DS-Digital'}}>
-        <div className='flex w-48'>
-          <span className='w-12'>{Math.floor(time.hours/1000) % 10}</span>
-          <span className='w-12'>{Math.floor(time.hours/100) % 10}</span>
-          <span className='w-12'>{Math.floor(time.hours/10) % 10}</span>
-          <span className='w-12'>{time.hours%10}</span>
+        <div className='flex w-32 md:w-48'>
+          <span className='w-8 md:w-12'>{Math.floor(time.hours/1000) % 10}</span>
+          <span className='w-8 md:w-12'>{Math.floor(time.hours/100) % 10}</span>
+          <span className='w-8 md:w-12'>{Math.floor(time.hours/10) % 10}</span>
+          <span className='w-8 md:w-12'>{time.hours%10}</span>
         </div>
         <span>:</span>
-        <div className='flex w-24'>
-          <span className='w-12'>{Math.floor(time.minutes/10)}</span>
-          <span className='w-12'>{time.minutes%10}</span>
+        <div className='flex w-16 md:w-24'>
+          <span className='w-8 md:w-12'>{Math.floor(time.minutes/10)}</span>
+          <span className='w-8 md:w-12'>{time.minutes%10}</span>
         </div>
         <span>:</span>
-        <div className='flex w-24'>
-          <span className='w-12'>{Math.floor(time.seconds/10)}</span>
-          <span className='w-12'>{time.seconds%10}</span>
+        <div className='flex w-16 md:w-24'>
+          <span className='w-8 md:w-12'>{Math.floor(time.seconds/10)}</span>
+          <span className='w-8 md:w-12'>{time.seconds%10}</span>
         </div>
       </div>
-      <h2 className='text-md text-red-500'>
+      <h2 className='text-sm md:text-md text-red-500'>
         Countdown until {until.timeText}
       </h2>
       <footer className='fixed bottom-4 text-red-500 flex gap-4 text-sm items-center'>
