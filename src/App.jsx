@@ -113,31 +113,31 @@ function App() {
   // }
 
   return (
-    <main className='flex flex-col items-center justify-center gap-y-2 font-mono'>
+    <>
       <h1 className='text-md md:text-2xl text-red-500'>
         When does {until.label}?
       </h1>
-      <div className='bg-black rounded-lg shadow-md px-6 md:px-12 py-4 md:py-6
-        text-4xl md:text-8xl
+      <div className='bg-black rounded-lg shadow-md px-4 md:px-12 py-4 md:py-6
+        text-6xl md:text-8xl
         border-red-500 border-1
         text-red-500 text-right flex gap-x-2
         text-shadow-red-400 text-shadow-lg'
         style={{fontFamily:'DS-Digital'}}>
-        <div className='flex w-24 md:w-48'>
-          <span className='w-6 md:w-12'>{Math.floor(time.hours/1000) % 10}</span>
-          <span className='w-6 md:w-12'>{Math.floor(time.hours/100) % 10}</span>
-          <span className='w-6 md:w-12'>{Math.floor(time.hours/10) % 10}</span>
-          <span className='w-6 md:w-12'>{time.hours%10}</span>
+        <div className='flex w-32 md:w-48'>
+          <span className='w-8 md:w-12'>{Math.floor(time.hours/1000) % 10}</span>
+          <span className='w-8 md:w-12'>{Math.floor(time.hours/100) % 10}</span>
+          <span className='w-8 md:w-12'>{Math.floor(time.hours/10) % 10}</span>
+          <span className='w-8 md:w-12'>{time.hours%10}</span>
         </div>
         <span>:</span>
-        <div className='flex w-12 md:w-24'>
-          <span className='w-6 md:w-12'>{Math.floor(time.minutes/10)}</span>
-          <span className='w-6 md:w-12'>{time.minutes%10}</span>
+        <div className='flex w-16 md:w-24'>
+          <span className='w-8 md:w-12'>{Math.floor(time.minutes/10)}</span>
+          <span className='w-8 md:w-12'>{time.minutes%10}</span>
         </div>
         <span>:</span>
-        <div className='flex w-12 md:w-24'>
-          <span className='w-6 md:w-12'>{Math.floor(time.seconds/10)}</span>
-          <span className='w-6 md:w-12'>{time.seconds%10}</span>
+        <div className='flex w-16 md:w-24'>
+          <span className='w-8 md:w-12'>{Math.floor(time.seconds/10)}</span>
+          <span className='w-8 md:w-12'>{time.seconds%10}</span>
         </div>
       </div>
       <h2 className='text-xs md:text-md text-red-500'>
@@ -162,7 +162,7 @@ function App() {
           ))}
         </select>
       </div> */}
-    </main>
+    </>
   )
 }
 
